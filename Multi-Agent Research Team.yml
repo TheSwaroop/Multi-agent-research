@@ -1,0 +1,342 @@
+app:
+  description: ''
+  icon: 9a2e7ffe-da2f-41cb-8a80-dc5e61881e7b
+  icon_background: null
+  icon_type: image
+  mode: workflow
+  name: Multi-Agent Research Team
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:1.0.7@f36c3761167b3af0bfb4975b728fe3cd126342d076e1ec5359e6d4f92557d3d4
+    version: null
+kind: app
+version: 0.7.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        knowledge_file_size_limit: 15
+        single_chunk_attachment_limit: 10
+        skill_file_size_limit: 50
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1792423374526--1792423771271-target
+      source: '1792423374526'
+      sourceHandle: source
+      target: '1792423771271'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1792423771271--1792423916750-target
+      source: '1792423771271'
+      sourceHandle: source
+      target: '1792423916750'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1792423916750--1792424050679-target
+      source: '1792423916750'
+      sourceHandle: source
+      target: '1792424050679'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1792424050679--1792424159749-target
+      source: '1792424050679'
+      sourceHandle: source
+      target: '1792424159749'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: Research topic
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: research topic
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: topic
+      height: 108
+      id: '1792423374526'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-5
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 028f6650-9551-4fae-94e7-0faa938bd000
+          role: system
+          text: 'You are Agent 1: Researcher.
+
+
+            Your job is to research the topic provided by the user.
+
+
+            1. Identify the key facts and concepts.
+
+            2. List the main benefits and risks.
+
+            3. Identify important questions and missing information.
+
+            4. Organize your findings into clear sections.
+
+            5. Never invent statistics, facts, or sources.
+
+            6. Clearly state when information is uncertain.
+
+
+            Return structured research notes for the next agent.'
+        - id: 70335ca7-baf4-48ec-9761-f669a08ab218
+          role: user
+          text: 'role: User
+
+            Content: Research this topic: {{#1792423374526.topic#}}'
+        selected: false
+        title: Agent Researcher
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1792423771271'
+      position:
+        x: 330.3473807459703
+        y: 108.14484251082716
+      positionAbsolute:
+        x: 330.3473807459703
+        y: 108.14484251082716
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-5
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: baee8eaa-57d3-4f25-878d-24d7148543b6
+          role: system
+          text: 'You are Agent 2: Analyst.
+
+
+            Analyze the research notes provided by Agent 1.
+
+            Identify key findings, benefits, risks, contradictions, and missing evidence.
+
+            Distinguish facts from assumptions.
+
+            Do not invent information.
+
+            Return a concise, structured analysis.'
+        - id: 5e2dd5e0-f645-4d44-a3de-bfabcd1359fd
+          role: user
+          text: '{{#1792423771271.text#}}'
+        selected: false
+        title: Agent Analyst
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1792423916750'
+      position:
+        x: 409.6190639481846
+        y: 334.91243923583517
+      positionAbsolute:
+        x: 409.6190639481846
+        y: 334.91243923583517
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: Agent Report writer
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-5
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: dc348a9e-c84b-4a4f-93b3-99430a35f2a4
+          role: system
+          text: 'You are Agent 3: Report Writer.
+
+
+            Your task is to write a clear, professional report based on the analysis
+            provided by Agent 2.
+
+
+            Include:
+
+            1. A descriptive title
+
+            2. An introduction
+
+            3. The main findings
+
+            4. Benefits and risks
+
+            5. Limitations and uncertainties
+
+            6. A conclusion
+
+
+            Use clear headings and concise language.
+
+            Do not invent facts or introduce unsupported claims.
+
+            Return the complete report.'
+        - id: 0a4d0b68-60d6-483a-8a1a-c2ff691ab399
+          role: user
+          text: 'Write a report based on this analysis: {{#1792423916750.text#}}'
+        selected: false
+        title: Agent Report writer
+        type: llm
+        vision:
+          enabled: false
+      height: 115
+      id: '1792424050679'
+      position:
+        x: 716.9181638572127
+        y: 365.14811879916965
+      positionAbsolute:
+        x: 716.9181638572127
+        y: 365.14811879916965
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        outputs:
+        - value_selector:
+          - '1792424050679'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: Output
+        type: end
+      height: 87
+      id: '1792424159749'
+      position:
+        x: 628.6337894792823
+        y: 122.00286231068878
+      positionAbsolute:
+        x: 628.6337894792823
+        y: 122.00286231068878
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    viewport:
+      x: -33.69240507187533
+      y: -5.084333918334721
+      zoom: 0.9878605490508076
+  rag_pipeline_variables: []
